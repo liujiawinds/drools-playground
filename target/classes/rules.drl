@@ -1,0 +1,23 @@
+package com.liujia.drools;
+
+import org.liujia.drools.bean.Behavior;
+
+rule "非正常登陆"
+    when
+        // 异常登录
+        $b1 : Behavior( schema == "登录日志", dimension == "Logon"
+        || dimension == "Logoff", anomalyScore > 70, count > 5 )
+    then
+    {
+        $b1.out("wocao");
+    }
+end
+
+rule "非正常使用邮件"
+    when
+        $b1 : Behavior( schema == "邮件日志", anomalyScore > 60, count > 5 )
+    then
+    {
+        $b1.out("wocao1");
+    }
+end
